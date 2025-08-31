@@ -4,14 +4,14 @@ CREATE TABLE recipe (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     instructions TEXT,
+    url TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Ingredients table --
 CREATE TABLE ingredient (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    category VARCHAR(100)
+    name VARCHAR(100) NOT NULL UNIQUE
 );
 
 -- Units Table --
