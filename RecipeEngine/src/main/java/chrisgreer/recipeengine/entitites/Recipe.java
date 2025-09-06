@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 public class Recipe {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "id")
     private Long id;
 

@@ -12,6 +12,7 @@ import lombok.Setter;
 public class RecipeIngredient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "id")
     private Long id;
 

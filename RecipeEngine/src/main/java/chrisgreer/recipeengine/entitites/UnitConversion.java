@@ -11,6 +11,7 @@ import lombok.Setter;
 public class UnitConversion {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
