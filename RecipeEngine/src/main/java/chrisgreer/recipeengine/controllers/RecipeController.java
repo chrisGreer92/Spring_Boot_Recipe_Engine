@@ -96,6 +96,19 @@ public class RecipeController {
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(recipeMapper.toDto(recipe));
     }
-    
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecipe(
+            @PathVariable Long id
+    ){
+        var recipe = recipeRepository.findById(id).orElse(null);
+
+        if (recipe == null) return ResponseEntity.notFound().build();
+
+        recipeRepository.delete(recipe);
+
+        return ResponseEntity.noContent().build();
+    }
 
 }
