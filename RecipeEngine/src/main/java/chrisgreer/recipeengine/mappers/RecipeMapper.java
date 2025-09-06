@@ -2,10 +2,14 @@ package chrisgreer.recipeengine.mappers;
 
 import chrisgreer.recipeengine.dtos.CreateRecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeDto;
+import chrisgreer.recipeengine.dtos.RecipeIngredientDto;
 import chrisgreer.recipeengine.entitites.Recipe;
+import chrisgreer.recipeengine.entitites.RecipeIngredient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RecipeMapper {
@@ -21,5 +25,9 @@ public interface RecipeMapper {
     }
 
     RecipeDto toDto(Recipe recipe);
+
+    RecipeIngredientDto toDto(RecipeIngredient recipeIngredient);
+
+    List<RecipeDto> toDtoList(List<Recipe> recipes);
 
 }
