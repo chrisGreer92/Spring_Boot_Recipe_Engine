@@ -85,4 +85,18 @@ public class RecipeController {
                 .toList();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<RecipeDto> getRecipes(
+            @PathVariable Long id
+    ) {
+
+        var recipe = recipeRepository.findById(id).orElse(null);
+
+        return (recipe == null)
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(recipeMapper.toDto(recipe));
+    }
+
+
+
 }
