@@ -28,7 +28,7 @@ public interface RecipeMapper {
 
     RecipeDto toDto(Recipe recipe);
 
-    @Mapping(target = "unit", source = "unit.name")      // or .abbreviation if you prefer
+    @Mapping(target = "unit", source = "unit.name")
     @Mapping(target = "name", source = "ingredient.name")
     RecipeIngredientDto toDto(RecipeIngredient recipeIngredient);
 

@@ -96,7 +96,6 @@ public class RecipeController {
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(recipeMapper.toDto(recipe));
     }
-
-
+    
 
 }

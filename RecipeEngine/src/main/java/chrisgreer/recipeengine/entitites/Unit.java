@@ -23,14 +23,10 @@ public class Unit {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "abbreviation")
-    private String abbreviation;
-
     @OneToMany(mappedBy = "unit")
     private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     public Unit(String name) {
         this.name = name;
-        this.abbreviation = name; //By default both the same, may end up dropping
     }
 }
