@@ -6,11 +6,7 @@ import chrisgreer.recipeengine.dtos.RecipeIngredientDto;
 import chrisgreer.recipeengine.dtos.UpdateRecipeDto;
 import chrisgreer.recipeengine.entitites.Recipe;
 import chrisgreer.recipeengine.entitites.RecipeIngredient;
-import chrisgreer.recipeengine.entitites.Unit;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -20,6 +16,7 @@ public interface RecipeMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "ingredients", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Recipe updateRecipe(UpdateRecipeDto dto, @MappingTarget Recipe recipe);
 
     UpdateRecipeDto toUpdateDto(Recipe recipe);
