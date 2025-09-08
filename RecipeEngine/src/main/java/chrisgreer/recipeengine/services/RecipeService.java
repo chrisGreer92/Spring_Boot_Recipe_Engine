@@ -50,5 +50,17 @@ public class RecipeService {
         return recipeMapper.toDto(recipe);
     }
 
+    public List<RecipeDto> getAllRecipes() {
+        return recipeRepository.findAll()
+                .stream()
+                .map(recipeMapper::toDto)
+                .toList();
+    }
+
+    public Optional<RecipeDto> getRecipe(Long id) {
+        return recipeRepository.findById(id)
+                .map(recipeMapper::toDto);
+    }
+
 
 }

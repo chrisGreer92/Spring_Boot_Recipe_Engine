@@ -3,7 +3,6 @@ package chrisgreer.recipeengine.controllers;
 
 import chrisgreer.recipeengine.dtos.CreateRecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeDto;
-import chrisgreer.recipeengine.dtos.RecipeIngredientDto;
 import chrisgreer.recipeengine.dtos.UpdateRecipeDto;
 import chrisgreer.recipeengine.entitites.*;
 import chrisgreer.recipeengine.repositories.IngredientRepository;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -47,25 +45,16 @@ public class RecipeController {
 
     }
 
-
     @GetMapping
-    public List<RecipeDto> getAllRecipes() {
-        return recipeRepository.findAll()
-                .stream()
-                .map(recipeMapper::toDto)
-                .toList();
-    }
+    public List<RecipeDto> getAllRecipes() {return recipeService.getAllRecipes();}
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeDto> getRecipes(
+    public ResponseEntity<RecipeDto> getRecipe(
             @PathVariable Long id
     ) {
-
-        var recipe = recipeRepository.findById(id).orElse(null);
-
-        return (recipe == null)
-                ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(recipeMapper.toDto(recipe));
+        return recipeService.getRecipe(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PatchMapping("/{id}")
