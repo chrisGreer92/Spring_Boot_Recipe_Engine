@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class RecipeIngredientDto {
 
+    private Long id;
     private String name;
     private Double amount;
     private String unit;

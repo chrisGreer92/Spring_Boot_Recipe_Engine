@@ -19,5 +19,4 @@ public class RecipeDto {
     private Instant createdAt;
     private List<RecipeIngredientDto> ingredients;
 
-
 }

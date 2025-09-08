@@ -128,4 +128,27 @@ public class RecipeController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{id}/ingredients/{ingredientId}")
+    public ResponseEntity<Void> deleteIngredient(
+            @PathVariable Long id,
+            @PathVariable Long ingredientId
+    ){
+
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+        if (recipe == null) return ResponseEntity.notFound().build();
+
+        RecipeIngredient toRemove = recipe.getIngredients().stream()
+                .filter(i -> i.getId().equals(ingredientId))
+                .findFirst()
+                .orElse(null);
+
+        if (toRemove == null) return ResponseEntity.notFound().build();
+
+        recipe.getIngredients().remove(toRemove);
+
+        recipeRepository.save(recipe);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }
