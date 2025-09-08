@@ -4,6 +4,7 @@ package chrisgreer.recipeengine.controllers;
 import chrisgreer.recipeengine.dtos.CreateRecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeIngredientDto;
+import chrisgreer.recipeengine.dtos.UpdateRecipeDto;
 import chrisgreer.recipeengine.entitites.*;
 import chrisgreer.recipeengine.repositories.IngredientRepository;
 import chrisgreer.recipeengine.mappers.RecipeMapper;
@@ -97,6 +98,22 @@ public class RecipeController {
                 : ResponseEntity.ok(recipeMapper.toDto(recipe));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateRecipe(
+            @PathVariable Long id,
+            @RequestBody UpdateRecipeDto dto
+            ){
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+
+        if(recipe == null) return ResponseEntity.notFound().build();
+
+        Recipe updatedRecipe = recipeMapper.updateRecipe(dto, recipe);
+
+        recipeRepository.save(updatedRecipe);
+
+        return ResponseEntity.noContent().build();
+
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(

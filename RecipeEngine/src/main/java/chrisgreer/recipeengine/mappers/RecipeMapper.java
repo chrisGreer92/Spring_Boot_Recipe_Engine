@@ -3,11 +3,13 @@ package chrisgreer.recipeengine.mappers;
 import chrisgreer.recipeengine.dtos.CreateRecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeIngredientDto;
+import chrisgreer.recipeengine.dtos.UpdateRecipeDto;
 import chrisgreer.recipeengine.entitites.Recipe;
 import chrisgreer.recipeengine.entitites.RecipeIngredient;
 import chrisgreer.recipeengine.entitites.Unit;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 import java.util.List;
@@ -17,8 +19,20 @@ public interface RecipeMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "ingredients", ignore = true)
+    Recipe updateRecipe(UpdateRecipeDto dto, @MappingTarget Recipe recipe);
+
+    UpdateRecipeDto toUpdateDto(Recipe recipe);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "instructions", source = "instructions", qualifiedByName = "pipeToNewline")
     Recipe toEntity(CreateRecipeDto dto);
+
+    @Named("pipeToNewline")
+    static String pipeToNewline(String instructions) {
+        return instructions == null ? null : instructions.replace("|", "\n");
+    }
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "recipe", ignore = true)
@@ -32,11 +46,8 @@ public interface RecipeMapper {
     @Mapping(target = "name", source = "ingredient.name")
     RecipeIngredientDto toDto(RecipeIngredient recipeIngredient);
 
+
     List<RecipeDto> toDtoList(List<Recipe> recipes);
 
-    @Named("pipeToNewline")
-    static String pipeToNewline(String instructions) {
-        return instructions == null ? null : instructions.replace("|", "\n");
-    }
 
 }
