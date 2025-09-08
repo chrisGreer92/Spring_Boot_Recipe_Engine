@@ -62,29 +62,18 @@ public class RecipeController {
             @PathVariable Long id,
             @RequestBody UpdateRecipeDto dto
             ){
-        Recipe recipe = recipeRepository.findById(id).orElse(null);
-
-        if(recipe == null) return ResponseEntity.notFound().build();
-
-        Recipe updatedRecipe = recipeMapper.updateRecipe(dto, recipe);
-
-        recipeRepository.save(updatedRecipe);
-
-        return ResponseEntity.noContent().build();
-
+        return recipeService.updateRecipe(id, dto)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(
             @PathVariable Long id
     ){
-        var recipe = recipeRepository.findById(id).orElse(null);
-
-        if (recipe == null) return ResponseEntity.notFound().build();
-
-        recipeRepository.delete(recipe);
-
-        return ResponseEntity.noContent().build();
+        return recipeService.deleteRecipe(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}/ingredients/{ingredientId}")
@@ -92,22 +81,9 @@ public class RecipeController {
             @PathVariable Long id,
             @PathVariable Long ingredientId
     ){
-
-        Recipe recipe = recipeRepository.findById(id).orElse(null);
-        if (recipe == null) return ResponseEntity.notFound().build();
-
-        RecipeIngredient toRemove = recipe.getIngredients().stream()
-                .filter(i -> i.getId().equals(ingredientId))
-                .findFirst()
-                .orElse(null);
-
-        if (toRemove == null) return ResponseEntity.notFound().build();
-
-        recipe.getIngredients().remove(toRemove);
-
-        recipeRepository.save(recipe);
-
-        return ResponseEntity.noContent().build();
+        return recipeService.deleteIngredient(id, ingredientId)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 
 }

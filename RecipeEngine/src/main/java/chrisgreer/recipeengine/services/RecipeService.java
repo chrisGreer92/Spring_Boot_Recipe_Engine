@@ -1,6 +1,7 @@
 package chrisgreer.recipeengine.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import chrisgreer.recipeengine.repositories.*;
 import chrisgreer.recipeengine.mappers.*;
@@ -61,6 +62,45 @@ public class RecipeService {
         return recipeRepository.findById(id)
                 .map(recipeMapper::toDto);
     }
+
+    @Transactional
+    public boolean updateRecipe(Long id, UpdateRecipeDto dto) {
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+        if(recipe == null) return false;
+
+        Recipe updatedRecipe = recipeMapper.updateRecipe(dto, recipe);
+        recipeRepository.save(updatedRecipe);
+        return true;
+    }
+
+    @Transactional
+    public boolean deleteRecipe(Long id){
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+        if (recipe == null) return false;
+
+        recipeRepository.delete(recipe);
+        return true;
+    }
+
+    @Transactional
+    public boolean deleteIngredient(Long id, Long ingredientId){
+
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+        if (recipe == null) return false;
+
+        RecipeIngredient toRemove = recipe.getIngredients().stream()
+                .filter(i -> i.getId().equals(ingredientId))
+                .findFirst()
+                .orElse(null);
+
+        if (toRemove == null) return false;
+
+        recipe.getIngredients().remove(toRemove);
+        recipeRepository.save(recipe);
+        return true;
+    }
+
+
 
 
 }
