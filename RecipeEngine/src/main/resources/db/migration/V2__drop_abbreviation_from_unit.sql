@@ -1,1 +1,0 @@
-ALTER TABLE unit DROP COLUMN abbreviation;

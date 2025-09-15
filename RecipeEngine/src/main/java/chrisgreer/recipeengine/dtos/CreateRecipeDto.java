@@ -1,6 +1,7 @@
 package chrisgreer.recipeengine.dtos;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
