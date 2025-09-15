@@ -4,11 +4,9 @@ package chrisgreer.recipeengine.controllers;
 import chrisgreer.recipeengine.dtos.CreateRecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeDto;
 import chrisgreer.recipeengine.dtos.UpdateRecipeDto;
-import chrisgreer.recipeengine.entitites.*;
 import chrisgreer.recipeengine.repositories.IngredientRepository;
 import chrisgreer.recipeengine.mappers.RecipeMapper;
 import chrisgreer.recipeengine.repositories.RecipeRepository;
-import chrisgreer.recipeengine.repositories.UnitRepository;
 import chrisgreer.recipeengine.services.RecipeService;
 import chrisgreer.recipeengine.web.ResponseMapper;
 import lombok.AllArgsConstructor;
@@ -26,7 +24,6 @@ public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final RecipeMapper recipeMapper;
     private final IngredientRepository ingredientRepository;
-    private final UnitRepository unitRepository;
     private final RecipeService recipeService;
 
 

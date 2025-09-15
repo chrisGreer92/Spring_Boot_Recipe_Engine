@@ -20,7 +20,6 @@ public class RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
-    private final UnitRepository unitRepository;
     private final RecipeMapper recipeMapper;
 
 
@@ -34,14 +33,10 @@ public class RecipeService {
                     .findByNameIgnoreCase(ingredientDto.getName())
                     .orElseGet(() -> ingredientRepository.save(new Ingredient(ingredientDto.getName())));
 
-            Unit unit = unitRepository
-                    .findByNameIgnoreCase(ingredientDto.getUnit())
-                    .orElseGet(() -> unitRepository.save(new Unit(ingredientDto.getUnit())));
-
             RecipeIngredient recipeIngredient = recipeMapper.toEntity(ingredientDto);
             recipeIngredient.setRecipe(recipe);
             recipeIngredient.setIngredient(ingredient);
-            recipeIngredient.setUnit(unit);
+//            recipeIngredient.setUnit(unit);
 
             recipeIngredients.add(recipeIngredient);
         }
