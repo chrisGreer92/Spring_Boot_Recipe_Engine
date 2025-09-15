@@ -105,8 +105,8 @@
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/recipes</url>
-                    <user>chris</user>
-                    <password>password</password>
+                    <user>local_user</user>
+                    <password>local_pass</password>
                     <cleanDisabled>false</cleanDisabled>
                 </configuration>
                 <dependencies>
