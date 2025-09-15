@@ -1,5 +1,6 @@
 package chrisgreer.recipeengine.services;
 
+import chrisgreer.recipeengine.model.ServiceResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -64,40 +65,40 @@ public class RecipeService {
     }
 
     @Transactional
-    public boolean updateRecipe(Long id, UpdateRecipeDto dto) {
+    public ServiceResult updateRecipe(Long id, UpdateRecipeDto dto) {
         Recipe recipe = recipeRepository.findById(id).orElse(null);
-        if(recipe == null) return false;
+        if(recipe == null) return ServiceResult.NOT_FOUND;
 
         Recipe updatedRecipe = recipeMapper.updateRecipe(dto, recipe);
         recipeRepository.save(updatedRecipe);
-        return true;
+        return ServiceResult.SUCCESS;
     }
 
     @Transactional
-    public boolean deleteRecipe(Long id){
+    public ServiceResult deleteRecipe(Long id){
         Recipe recipe = recipeRepository.findById(id).orElse(null);
-        if (recipe == null) return false;
+        if (recipe == null) return ServiceResult.NOT_FOUND;
 
         recipeRepository.delete(recipe);
-        return true;
+        return ServiceResult.SUCCESS;
     }
 
     @Transactional
-    public boolean deleteIngredient(Long id, Long ingredientId){
+    public ServiceResult deleteIngredient(Long id, Long ingredientId){
 
         Recipe recipe = recipeRepository.findById(id).orElse(null);
-        if (recipe == null) return false;
+        if (recipe == null) return ServiceResult.NOT_FOUND;
 
         RecipeIngredient toRemove = recipe.getIngredients().stream()
                 .filter(i -> i.getId().equals(ingredientId))
                 .findFirst()
                 .orElse(null);
 
-        if (toRemove == null) return false;
+        if (toRemove == null) return ServiceResult.NOT_FOUND;
 
         recipe.getIngredients().remove(toRemove);
         recipeRepository.save(recipe);
-        return true;
+        return ServiceResult.SUCCESS;
     }
 
 

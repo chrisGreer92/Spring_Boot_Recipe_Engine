@@ -10,6 +10,7 @@ import chrisgreer.recipeengine.mappers.RecipeMapper;
 import chrisgreer.recipeengine.repositories.RecipeRepository;
 import chrisgreer.recipeengine.repositories.UnitRepository;
 import chrisgreer.recipeengine.services.RecipeService;
+import chrisgreer.recipeengine.web.ResponseMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,18 +63,14 @@ public class RecipeController {
             @PathVariable Long id,
             @RequestBody UpdateRecipeDto dto
             ){
-        return recipeService.updateRecipe(id, dto)
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+        return ResponseMapper.toResponse(recipeService.updateRecipe(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(
             @PathVariable Long id
     ){
-        return recipeService.deleteRecipe(id)
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+        return ResponseMapper.toResponse(recipeService.deleteRecipe(id));
     }
 
     @DeleteMapping("/{id}/ingredients/{ingredientId}")
@@ -81,9 +78,7 @@ public class RecipeController {
             @PathVariable Long id,
             @PathVariable Long ingredientId
     ){
-        return recipeService.deleteIngredient(id, ingredientId)
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+        return ResponseMapper.toResponse(recipeService.deleteIngredient(id, ingredientId));
     }
 
 }
