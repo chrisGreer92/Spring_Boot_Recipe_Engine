@@ -2,7 +2,6 @@ package chrisgreer.recipeengine.services;
 
 import chrisgreer.recipeengine.model.ServiceResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import chrisgreer.recipeengine.repositories.*;
 import chrisgreer.recipeengine.mappers.*;
@@ -29,14 +28,14 @@ public class RecipeService {
 
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
         for (RecipeIngredientDto ingredientDto : dto.getIngredients()) {
+            String ingredientName = ingredientDto.getName();
             Ingredient ingredient = ingredientRepository
-                    .findByNameIgnoreCase(ingredientDto.getName())
-                    .orElseGet(() -> ingredientRepository.save(new Ingredient(ingredientDto.getName())));
+                    .findByNameIgnoreCase(ingredientName)
+                    .orElseGet(() -> ingredientRepository.save(new Ingredient(ingredientName)));
 
             RecipeIngredient recipeIngredient = recipeMapper.toEntity(ingredientDto);
             recipeIngredient.setRecipe(recipe);
             recipeIngredient.setIngredient(ingredient);
-//            recipeIngredient.setUnit(unit);
 
             recipeIngredients.add(recipeIngredient);
         }
@@ -79,7 +78,7 @@ public class RecipeService {
     }
 
     @Transactional
-    public ServiceResult deleteIngredient(Long id, Long ingredientId){
+    public ServiceResult removeIngredient(Long id, Long ingredientId){
 
         Recipe recipe = recipeRepository.findById(id).orElse(null);
         if (recipe == null) return ServiceResult.NOT_FOUND;

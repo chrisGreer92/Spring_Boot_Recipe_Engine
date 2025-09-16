@@ -1,7 +1,5 @@
 package chrisgreer.recipeengine.dtos;
 
-import chrisgreer.recipeengine.entitites.Ingredient;
-import chrisgreer.recipeengine.entitites.Recipe;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +8,12 @@ import lombok.Setter;
 public class RecipeIngredientDto {
 
     private Long id;
+    private String name;
     private Double originalAmount;
     private String originalUnit;
     private Double amountG;
     private Double amountMl;
     private String originalText;
-    private Boolean nonUkUnit;
-    private Recipe recipe;
-    private Ingredient ingredient;
+    private Boolean isNonUkUnit;
 
 }

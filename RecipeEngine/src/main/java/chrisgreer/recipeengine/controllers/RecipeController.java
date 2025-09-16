@@ -71,11 +71,11 @@ public class RecipeController {
     }
 
     @DeleteMapping("/{id}/ingredients/{ingredientId}")
-    public ResponseEntity<Void> deleteIngredient(
+    public ResponseEntity<Void> removeIngredient(
             @PathVariable Long id,
             @PathVariable Long ingredientId
     ){
-        return ResponseMapper.toResponse(recipeService.deleteIngredient(id, ingredientId));
+        return ResponseMapper.toResponse(recipeService.removeIngredient(id, ingredientId));
     }
 
 }

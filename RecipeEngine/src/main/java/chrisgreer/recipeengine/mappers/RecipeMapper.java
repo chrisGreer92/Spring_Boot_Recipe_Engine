@@ -33,12 +33,11 @@ public interface RecipeMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "recipe", ignore = true)
-    @Mapping(target = "ingredient", ignore = true)
+    @Mapping(target = "ingredient.name", source = "name")
     RecipeIngredient toEntity(RecipeIngredientDto dto);
 
     RecipeDto toDto(Recipe recipe);
 
-    @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "ingredient.name")
     RecipeIngredientDto toDto(RecipeIngredient recipeIngredient);
 
