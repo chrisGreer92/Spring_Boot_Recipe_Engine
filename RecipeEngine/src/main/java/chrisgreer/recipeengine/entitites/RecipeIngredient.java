@@ -17,19 +17,22 @@ public class RecipeIngredient {
     private Long id;
 
     @Column(name = "original_amount")
-    private Double original_amount;
+    private Double originalAmount;
 
     @Column(name = "original_amount")
-    private String original_unit;
+    private String originalUnit;
 
     @Column(name = "amount_in_grams")
-    private Double amount_g;
+    private Double amountG;
 
     @Column(name = "amount_in_milliliters")
-    private Double amount_ml;
+    private Double amountMl;
 
     @Column(name = "original_text")
     private String originalText;
+
+    @Column(name = "is_non_uk_unit")
+    private Boolean nonUkUnit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
