@@ -3,10 +3,12 @@ package chrisgreer.recipeengine.entitites;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "recipe_ingredient")
+@RequiredArgsConstructor
 @Getter
 @Setter
 public class RecipeIngredient {
@@ -41,5 +43,9 @@ public class RecipeIngredient {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
+
+    public RecipeIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
 
 }

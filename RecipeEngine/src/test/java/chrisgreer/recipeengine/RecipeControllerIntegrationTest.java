@@ -2,6 +2,7 @@ package chrisgreer.recipeengine;
 
 import chrisgreer.recipeengine.entitites.Ingredient;
 import chrisgreer.recipeengine.entitites.Recipe;
+import chrisgreer.recipeengine.entitites.RecipeIngredient;
 import chrisgreer.recipeengine.repositories.RecipeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class RecipeControllerIntegrationTest {
         recipeRepository.deleteAll();
         int totalRecipes = 3;
         for(int i = 0 ; i < totalRecipes ; i++){
-            Recipe recipe = createRecipe();
+            Recipe recipe = createRecipeWithoutIngredients();
             recipeRepository.save(recipe);
         }
 
@@ -51,19 +52,32 @@ public class RecipeControllerIntegrationTest {
 
     }
 
-    private Recipe createRecipe(){
+    private Recipe createRecipeWithoutIngredients() {
+        return createRecipe(new ArrayList<>());
+    }
+
+
+    private Recipe createRecipe(ArrayList<RecipeIngredient> ingredients) {
+        if (ingredients == null) ingredients = new ArrayList<>();
+
         Recipe recipe = new Recipe();
         recipe.setTitle("Example Recipe");
         recipe.setDescription("For Example");
         recipe.setInstructions("1 prep | 2 cook");
         recipe.setUrl("example.com");
-        recipe.setIngredients(new ArrayList<>());
+        recipe.setIngredients(ingredients);
+
+        for (RecipeIngredient ri : ingredients) {
+            ri.setRecipe(recipe);
+        }
+
         return recipe;
     }
 
-    private Ingredient makeIngredient(String name, double qty, String unit, Recipe recipe) {
-        Ingredient ing = new Ingredient();
-        ing.setName(name);
-        return ing;
+    private Recipe createRecipeWithFakeIngredients() {
+        ArrayList<RecipeIngredient> ingredients = new ArrayList<>();
+        ingredients.add(new RecipeIngredient(new Ingredient("Flour")));
+        ingredients.add(new RecipeIngredient(new Ingredient("Milk")));
+        return createRecipe(ingredients);
     }
 }
