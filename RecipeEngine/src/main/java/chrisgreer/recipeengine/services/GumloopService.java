@@ -9,7 +9,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class GumloopService {
 
     @Value("${gumloop.api.url}")
