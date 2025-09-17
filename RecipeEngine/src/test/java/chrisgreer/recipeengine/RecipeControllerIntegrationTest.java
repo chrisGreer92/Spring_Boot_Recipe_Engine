@@ -46,8 +46,8 @@ public class RecipeControllerIntegrationTest {
     @Test
     void getAllRecipes_ShouldReturnList_WhenRecipesExist() throws Exception {
         recipeRepository.deleteAll(); //Make sure don't still have any from previous
-        recipeRepository.save(createRecipeNoIngredients());
-        recipeRepository.save(createRecipeNoIngredients());
+        TestUtil.persistRecipe(recipeRepository);
+        TestUtil.persistRecipe(recipeRepository);
 
         mockMvc.perform(get("/recipes"))
                 .andExpect(status().isOk())
@@ -56,7 +56,7 @@ public class RecipeControllerIntegrationTest {
 
     @Test
     void getRecipe_ShouldReturnRecipe_WhenExists() throws Exception {
-        Recipe saved = recipeRepository.save(createRecipeNoIngredients());
+        Recipe saved = TestUtil.persistRecipe(recipeRepository);
 
         mockMvc.perform(get("/recipes/" + saved.getId()))
                 .andExpect(status().isOk())
@@ -66,7 +66,7 @@ public class RecipeControllerIntegrationTest {
 
     @Test
     void updateRecipe_ShouldReturn204_WhenSuccess() throws Exception {
-        Recipe saved = recipeRepository.save(createRecipeNoIngredients());
+        Recipe saved = TestUtil.persistRecipe(recipeRepository);
 
         String json = """
             {
@@ -88,7 +88,7 @@ public class RecipeControllerIntegrationTest {
 
     @Test
     void deleteRecipe_ShouldRemoveRecipe() throws Exception {
-        Recipe saved = recipeRepository.save(createRecipeNoIngredients());
+        Recipe saved = TestUtil.persistRecipe(recipeRepository);
 
         mockMvc.perform(delete("/recipes/" + saved.getId()))
                 .andExpect(status().isNoContent());
@@ -105,7 +105,7 @@ public class RecipeControllerIntegrationTest {
         Ingredient flour = ingredientRepository.save(new Ingredient("Flour"));
         Ingredient sugar = ingredientRepository.save(new Ingredient("Sugar"));
 
-        Recipe recipe = createRecipeNoIngredients();
+        Recipe recipe = TestUtil.createValidRecipe();
         RecipeIngredient flourLink = new RecipeIngredient(flour);
         RecipeIngredient sugarLink = new RecipeIngredient(sugar);
 
@@ -132,15 +132,5 @@ public class RecipeControllerIntegrationTest {
 
         // Flour ingredient still exists as an Ingredient record
         assertTrue(ingredientRepository.findById(flourId).isPresent());
-    }
-
-    private Recipe createRecipeNoIngredients() {
-        Recipe recipe = new Recipe();
-        recipe.setTitle("Example Recipe");
-        recipe.setDescription("For Example");
-        recipe.setInstructions("1 prep | 2 cook");
-        recipe.setUrl("example.com");
-
-        return recipe;
     }
 }
