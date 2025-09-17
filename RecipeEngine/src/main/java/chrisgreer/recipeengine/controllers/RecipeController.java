@@ -4,11 +4,14 @@ package chrisgreer.recipeengine.controllers;
 import chrisgreer.recipeengine.dtos.CreateRecipeDto;
 import chrisgreer.recipeengine.dtos.RecipeDto;
 import chrisgreer.recipeengine.dtos.UpdateRecipeDto;
+import chrisgreer.recipeengine.dtos.UrlDto;
 import chrisgreer.recipeengine.repositories.IngredientRepository;
 import chrisgreer.recipeengine.mappers.RecipeMapper;
 import chrisgreer.recipeengine.repositories.RecipeRepository;
+import chrisgreer.recipeengine.services.GumloopService;
 import chrisgreer.recipeengine.services.RecipeService;
 import chrisgreer.recipeengine.web.ResponseMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,17 @@ public class RecipeController {
     private final RecipeMapper recipeMapper;
     private final IngredientRepository ingredientRepository;
     private final RecipeService recipeService;
+    private final GumloopService gumloopService;
 
+
+    @PostMapping("/ingest")
+    public ResponseEntity<Void> ingestUrl(
+            @RequestBody @Valid
+            UrlDto dto
+    ) {
+        gumloopService.sendUrl(dto.getUrl());
+        return ResponseEntity.accepted().build();
+    }
 
     @PostMapping
     public ResponseEntity<RecipeDto> createRecipe(
