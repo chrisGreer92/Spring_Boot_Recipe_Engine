@@ -41,7 +41,9 @@ public interface RecipeMapper {
         for (int i = 0; i < steps.length; i++) {
             numbered.append(i + 1).append(". ").append(steps[i].trim());
             if (i < steps.length - 1) {
-                numbered.append("\n\n");
+                numbered.append("\n");
+                numbered.append("------------");
+                numbered.append("\n");
             }
         }
 

@@ -25,20 +25,18 @@
 </head>
 <body>
   <header>
-    <h1>Recipes</h1>
+    <h1>Chris' Recipe Engine</h1>
   </header>
 
   <section class="highlight-box" style="max-width: 1100px; margin: 1.5rem auto;">
     <div style="display:flex; justify-content: space-between; align-items: center; gap:1rem; flex-wrap: wrap;">
-      <h2 style="margin: 0;">All Recipes</h2>
+      <h2 style="margin: 0;">Added Recipes</h2>
       <div class="row-actions">
         <input id="globalUrl" type="url" class="url-input" placeholder="https://example.com..." aria-label="URL to send">
-        <button id="globalSendBtn" class="button" type="button">Send</button>
+        <button id="globalSendBtn" class="button" type="button">Add New</button>
         <span id="globalSendStatus" class="meta" aria-live="polite"></span>
       </div>
     </div>
-
-    <p class="meta" id="recipesCount" aria-live="polite"></p>
 
     <div id="listError" role="alert" style="display:none; margin:.75rem 0; color:#a00;"></div>
 
