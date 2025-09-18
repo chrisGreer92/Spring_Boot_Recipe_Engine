@@ -30,6 +30,24 @@ public class Recipe {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "diet_type")
+    private String dietType;
+
+    @Column(name = "gluten_free")
+    private boolean glutenFree;
+
+    @Column(name = "prep_time_minutes")
+    private int prepTime;
+
+    @Column(name = "cooking_time_minutes")
+    private int cookTime;
+
+    @Column(name = "total_time_minutes")
+    private int totalTime;
+
+    @Column(name = "number_served")
+    private int serves;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 

@@ -11,5 +11,11 @@ public class UpdateRecipeDto {
     private String description;
     private String instructions;
     private String url;
+    private String dietType;
+    private boolean glutenFree;
+    private int prepTime;
+    private int cookTime;
+    private int totalTime;
+    private int serves;
 
 }
