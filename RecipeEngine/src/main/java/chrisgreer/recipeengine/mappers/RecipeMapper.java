@@ -23,12 +23,29 @@ public interface RecipeMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "instructions", source = "instructions", qualifiedByName = "pipeToNewline")
+    @Mapping(target = "instructions", source = "instructions", qualifiedByName = "pipeToNumbered")
     Recipe toEntity(CreateRecipeDto dto);
 
     @Named("pipeToNewline")
     static String pipeToNewline(String instructions) {
-        return instructions == null ? null : instructions.replace("|", "\n");
+        return instructions == null ? null : instructions.replace("|", "\n\n");
+    }
+
+    @Named("pipeToNumbered")
+    static String pipeToNumbered(String instructions) {
+        if (instructions == null) return null;
+
+        String[] steps = instructions.split("\\|");
+        StringBuilder numbered = new StringBuilder();
+
+        for (int i = 0; i < steps.length; i++) {
+            numbered.append(i + 1).append(". ").append(steps[i].trim());
+            if (i < steps.length - 1) {
+                numbered.append("\n\n");
+            }
+        }
+
+        return numbered.toString();
     }
 
     @Mapping(target = "id", ignore = true)
