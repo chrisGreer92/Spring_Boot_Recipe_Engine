@@ -10,7 +10,7 @@ services:
       DB_PATH: ${DB_PATH}
       API_USERNAME: ${API_USERNAME}
       API_PASSWORD: ${API_PASSWORD}
-      GUMLOOP_API_URL: ${GUMLOOP_API_URL}
+      SHEETS_API_JSON: ${SHEETS_API_JSON}
     depends_on:
       - db
 

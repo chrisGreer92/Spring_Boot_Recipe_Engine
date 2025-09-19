@@ -13,10 +13,12 @@ import chrisgreer.recipeengine.services.RecipeService;
 import chrisgreer.recipeengine.web.ResponseMapper;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,16 +30,22 @@ public class RecipeController {
     private final RecipeMapper recipeMapper;
     private final IngredientRepository ingredientRepository;
     private final RecipeService recipeService;
-    private final SheetsAPIService SheetsAPIService;
+    private final SheetsAPIService sheetsAPIService;
 
 
     @PostMapping("/ingest")
-    public ResponseEntity<Void> ingestUrl(
+    public ResponseEntity<String> ingestUrl(
             @RequestBody @Valid
             UrlDto dto
     ) {
-        SheetsAPIService.sendUrl(dto.getUrl());
-        return ResponseEntity.accepted().build();
+        try {
+            sheetsAPIService.updateCell(dto.getUrl());
+            return ResponseEntity.accepted().body("Recipe accepted." +
+                    "\n Please refresh your browser (may take a couple of minutes).");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                    .body("Failed to request recipe, please contact administrator." + e.getMessage());
+        }
     }
 
     @PostMapping
