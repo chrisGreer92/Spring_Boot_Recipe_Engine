@@ -8,7 +8,7 @@ import chrisgreer.recipeengine.dtos.UrlDto;
 import chrisgreer.recipeengine.repositories.IngredientRepository;
 import chrisgreer.recipeengine.mappers.RecipeMapper;
 import chrisgreer.recipeengine.repositories.RecipeRepository;
-import chrisgreer.recipeengine.services.GumloopService;
+import chrisgreer.recipeengine.services.SheetsAPIService;
 import chrisgreer.recipeengine.services.RecipeService;
 import chrisgreer.recipeengine.web.ResponseMapper;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class RecipeController {
     private final RecipeMapper recipeMapper;
     private final IngredientRepository ingredientRepository;
     private final RecipeService recipeService;
-    private final GumloopService gumloopService;
+    private final SheetsAPIService SheetsAPIService;
 
 
     @PostMapping("/ingest")
@@ -36,7 +36,7 @@ public class RecipeController {
             @RequestBody @Valid
             UrlDto dto
     ) {
-        gumloopService.sendUrl(dto.getUrl());
+        SheetsAPIService.sendUrl(dto.getUrl());
         return ResponseEntity.accepted().build();
     }
 

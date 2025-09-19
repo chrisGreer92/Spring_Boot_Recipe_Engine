@@ -1,6 +1,5 @@
 package chrisgreer.recipeengine.services;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 @Service
-public class GumloopService {
+public class SheetsAPIService {
 
     @Value("${gumloop.api.url}")
     private String gumloopApiUrl;
