@@ -16,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -30,14 +31,16 @@ public class SheetsAPIService {
     @Value("${sheets.range}")
     private String range;
 
-    public SheetsAPIService() throws Exception {
-        String jsonKey = System.getenv("SHEETS_API_JSON");
-        if (jsonKey == null || jsonKey.isBlank()) {
+    public SheetsAPIService(@Value("${SHEETS_API_JSON}") String jsonKeyBase64) throws Exception {
+        if (jsonKeyBase64 == null || jsonKeyBase64.isBlank()) {
             throw new IllegalStateException("Missing SHEETS_API_JSON environment variable");
         }
 
+        // Decode base64 back into original JSON bytes
+        byte[] decoded = Base64.getDecoder().decode(jsonKeyBase64);
+
         GoogleCredentials credentials = GoogleCredentials.fromStream(
-                new ByteArrayInputStream(jsonKey.getBytes(StandardCharsets.UTF_8))
+                new ByteArrayInputStream(decoded)
         ).createScoped(List.of(SheetsScopes.SPREADSHEETS));
 
         this.sheets = new Sheets.Builder(
