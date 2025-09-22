@@ -56,6 +56,9 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("https://chrisgreer.uk");
+        config.addAllowedOrigin("https://app.gumloop.com");
+        config.addAllowedOrigin("https://api.gumloop.com");
+        config.addAllowedOriginPattern("https://*.gumloop.com");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
