@@ -1,4 +1,10 @@
-# recipe_engine
-Backend application for managing recipes and ingredients, built with Spring Boot and PostgreSQL using a database-first approach with Flyway migrations. Recipes to be stored in a structured format with normalised ingredients, linked through a many-to-many relationship. Each recipe stores ingredient amounts and their converted values, making it possible to switch between units like cups, grams, and milliliters.
+# Recipe Engine
+Self-hosted recipe management system built with Java + Spring Boot and PostgreSQL, containerised with Docker and deployed on fly.io.
 
-The system exposes RESTful APIs for adding and retrieving recipes, while handling duplicate ingredient detection and unit conversion automatically. Future extensions include using external parsing tools (e.g. Gumloop) to extract recipe data from the web into structured JSON, and a lightweight frontend recipe book to browse and filter stored recipes.
+Designed to let users store and browse structured recipes, with ingredients, amounts, tags, and dietary flags.
+
+The system follows a clean architecture approach with separation of DTOs, entities, and controllers, and uses Spring Data JPA for persistence, Flyway for versioned schema migrations, and MapStruct for entity–DTO mapping.
+
+The RESTful API currently supports creating, listing, retrieving, and deleting recipes, with planned extensions for filtering, sorting, and ingredients management. A custom Gumloop workflow integrates with the backend to parse recipes from external URLs and automatically convert ingredient units into UK/metric values.
+
+A lightweight frontend (HTML + JavaScript) provides a simple interface for adding recipes by URL and viewing the stored collection.
