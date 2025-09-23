@@ -2,6 +2,7 @@ package chrisgreer.recipeengine.services;
 
 import chrisgreer.recipeengine.model.ServiceResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import chrisgreer.recipeengine.repositories.*;
 import chrisgreer.recipeengine.mappers.*;
@@ -47,7 +48,7 @@ public class RecipeService {
     }
 
     public List<RecipeDto> getAllRecipes() {
-        return recipeRepository.findAll()
+        return recipeRepository.findAllByOrderByIdAsc()
                 .stream()
                 .map(recipeMapper::toDto)
                 .toList();
